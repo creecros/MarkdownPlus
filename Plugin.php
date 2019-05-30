@@ -13,6 +13,9 @@ class Plugin extends Base
 	{
         //Helpers
         $this->helper->register('text', '\Kanboard\Plugin\EmojiSupport\Helper\EmojiTextHelper');
+        //CSS
+        $this->hook->on('template:layout:css', array('template' => 'plugins/EmojiSupport/Assets/css/emojisupport.css'));
+
 	}
 	
 	public function getPluginName()	

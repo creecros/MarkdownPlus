@@ -54,7 +54,7 @@ class EmojiTextHelper extends Base
         $emoji = new Client(new Ruleset());
         $parser = new Markdown($this->container, $isPublicLink);
         $parser->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
-        return $emoji->shortnameToImage($parser->text($text));
+        return $emoji->toImage($parser->text($text));
     }
 
     /**
