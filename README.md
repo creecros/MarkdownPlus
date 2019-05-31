@@ -64,10 +64,10 @@ https://michelf.ca/projects/php-markdown/extra/
 
 ## Manually
 
-1.) Download the latest versions supplied zip file, it should be named `EmojiSupport-x.xx.x.zip`
+1.) Download the latest versions supplied zip file, it should be named `MarkdownPlus-x.xx.x.zip`
   - I advise not to install from source or master
 
-![image](https://user-images.githubusercontent.com/26339368/58675566-eaa02000-8322-11e9-9466-85bcff17f320.png)
+![image](https://user-images.githubusercontent.com/26339368/58711319-45ba2d00-838c-11e9-9d07-71a526ba5b74.png)
 
 2.) Unzip to the plugins folder.
   - your folder structure should look like the following:
