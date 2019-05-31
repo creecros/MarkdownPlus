@@ -9,6 +9,8 @@
 
 # MarkdownPlus
 
+**Author: ![creecros](https://github.com/creecros)
+
 ## Adds EmojiOne Shortcode and Unicode conversions to Markdown in Kanboard
 
 _Converts :shortname: and Unicode to EmojiOne newschool emojis, or..._
