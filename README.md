@@ -7,7 +7,7 @@
 **:star: If you use it, you should star it on Github!**
 *It's the least you can do for all the work put into it!*
 
-# EmojiSupport
+# MarkdownPlus
 
 ## Adds EmojiOne Shortcode and Unicode conversions to Markdown in Kanboard
 
@@ -29,6 +29,30 @@ _Toggle for oldschool vs newschool emojis is located in `Settings > Application 
 
 ![image](https://user-images.githubusercontent.com/26339368/58675183-289c4480-8321-11e9-86ed-2b58028b7127.png)
 
+## Adds Check box conversion Markdown in Kanboard
+
+_from_ 
+
+![image](https://user-images.githubusercontent.com/26339368/58710361-21f5e780-838a-11e9-8c3f-ff6f9b3c8dae.png)
+
+_to_
+
+![image](https://user-images.githubusercontent.com/26339368/58710411-4356d380-838a-11e9-8288-1c89686810b3.png)
+
+## Inline HTML conversion in Markdown in Kanboard
+
+_from_
+
+![image](https://user-images.githubusercontent.com/26339368/58710512-78632600-838a-11e9-8c47-da05f639f162.png)
+
+_to_
+
+![image](https://user-images.githubusercontent.com/26339368/58710544-887b0580-838a-11e9-8c06-a449cbfc82a3.png)
+
+## Markdown Extra support
+
+https://michelf.ca/projects/php-markdown/extra/
+
 # Install
 
 ## Automatically
@@ -49,7 +73,7 @@ _Toggle for oldschool vs newschool emojis is located in `Settings > Application 
   - your folder structure should look like the following:
 ```
 plugins
-└── EmojiSupport            <= Plugin name
+└── MarkdownPlus            <= Plugin name
     ├── Assets    
     ├── Helper  
     ├── Template
