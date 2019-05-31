@@ -3,6 +3,10 @@ img.emojione {
     max-width: 22px;
 }
 
+.markdown img {
+    display: inline!important;
+}
+
 /* AutoComplete styles for JoyPixels */
  
     .emoji-menu {
