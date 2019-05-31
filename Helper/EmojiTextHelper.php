@@ -54,7 +54,10 @@ class EmojiTextHelper extends Base
         $emoji = new Client(new Ruleset());
         $parser = new Markdown($this->container, $isPublicLink);
         $parser->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
-        return $emoji->toImage($parser->text($text));
+        if ($this->configModel->get('unicode_shortcode', '2') == 1) 
+            return $emoji->shortnameToUnicode($parser->text($text));
+        else
+            return $emoji->toImage($parser->text($text));
     }
 
     /**

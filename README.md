@@ -10,4 +10,7 @@
 # EmojiSupport
 
 Adds EmojiOne Support to all Markdown in Kanboard.
-Converts :shortcode: and Unicode to EmojiOne, so long as it passes through the markdown helper.
+
+Converts :shortname: and Unicode to EmojiOne newschool emojis, or converts :shortname: to unicode for oldschool emojis, so long as it passes through the markdown helper.
+
+:shortname: autocomplete included.
