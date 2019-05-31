@@ -13,6 +13,17 @@ Adds EmojiOne Support to all Markdown in Kanboard.
 
 Converts :shortname: and Unicode to EmojiOne newschool emojis, or converts :shortname: to unicode for oldschool emojis, so long as it passes through the markdown helper.
 
-:shortname: autocomplete included.
+![image](https://user-images.githubusercontent.com/26339368/58675307-b5df9900-8321-11e9-9ab9-2cf6b7ada73d.png)
+
+or
+
+![image](https://user-images.githubusercontent.com/26339368/58675321-cbed5980-8321-11e9-81c8-5395e256ce97.png)
+
+:shortname: autocomplete included, will probably pop up on all textareas...
+
+![image](https://user-images.githubusercontent.com/26339368/58675249-66996880-8321-11e9-9f57-6acebb45d3f5.png)
 
 Toggle for oldschool vs newschool emojis is located in `Settings > Application settings`
+
+![image](https://user-images.githubusercontent.com/26339368/58675183-289c4480-8321-11e9-86ed-2b58028b7127.png)
+
