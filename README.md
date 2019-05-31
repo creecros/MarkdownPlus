@@ -51,7 +51,7 @@ _to_
 
 ![image](https://user-images.githubusercontent.com/26339368/58710544-887b0580-838a-11e9-8c06-a449cbfc82a3.png)
 
-## Markdown Extra support
+## Other Markdown Extra support (no guarantees)
 
 https://michelf.ca/projects/php-markdown/extra/
 
