@@ -57,7 +57,7 @@ https://michelf.ca/projects/php-markdown/extra/
 
 # Install
 
-**Kanboard versions tested down to 1.0.43, :shortcode: autocomplete will not function on older version.
+**Kanboard versions tested down to 1.0.43, :shortcode: autocomplete will not function on older version.**
 
 ## Automatically
 
