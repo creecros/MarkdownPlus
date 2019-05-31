@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit65a8882e640840f82a5b23de49691603
 {
+    public static $files = array (
+        '5e187b582b2b3bb26276f0085ef51bb1' => __DIR__ . '/..' . '/leblanc-simon/parsedown-checkbox/ParsedownCheckbox.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'E' => 
         array (
@@ -20,12 +24,29 @@ class ComposerStaticInit65a8882e640840f82a5b23de49691603
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'ParsedownExtra' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown-extra',
+            ),
+            'Parsedown' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Emojione\\Client' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Client.php',
         'Emojione\\ClientInterface' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/ClientInterface.php',
         'Emojione\\Emojione' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Emojione.php',
         'Emojione\\Ruleset' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Ruleset.php',
         'Emojione\\RulesetInterface' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/RulesetInterface.php',
+        'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
+        'ParsedownExtra' => __DIR__ . '/..' . '/erusev/parsedown-extra/ParsedownExtra.php',
+        'ParsedownExtraTest' => __DIR__ . '/..' . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -33,6 +54,7 @@ class ComposerStaticInit65a8882e640840f82a5b23de49691603
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit65a8882e640840f82a5b23de49691603::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit65a8882e640840f82a5b23de49691603::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit65a8882e640840f82a5b23de49691603::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit65a8882e640840f82a5b23de49691603::$classMap;
 
         }, null, ClassLoader::class);

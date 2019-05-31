@@ -11,4 +11,7 @@ return array(
     'Emojione\\Emojione' => $vendorDir . '/emojione/emojione/lib/php/src/Emojione.php',
     'Emojione\\Ruleset' => $vendorDir . '/emojione/emojione/lib/php/src/Ruleset.php',
     'Emojione\\RulesetInterface' => $vendorDir . '/emojione/emojione/lib/php/src/RulesetInterface.php',
+    'Parsedown' => $vendorDir . '/erusev/parsedown/Parsedown.php',
+    'ParsedownExtra' => $vendorDir . '/erusev/parsedown-extra/ParsedownExtra.php',
+    'ParsedownExtraTest' => $vendorDir . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
 );

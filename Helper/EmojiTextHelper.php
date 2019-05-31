@@ -1,6 +1,8 @@
 <?php
 
-namespace Kanboard\Plugin\EmojiSupport\Helper;
+namespace Kanboard\Plugin\MarkdownPlus\Helper;
+
+require __DIR__.'/../vendor/autoload.php';
 
 require __DIR__.'/../vendor/emojione/emojione/lib/php/autoload.php';
 
@@ -8,6 +10,8 @@ use Kanboard\Core\Markdown;
 use Kanboard\Core\Base;
 use Emojione\Client;
 use Emojione\RuleSet;
+use ParsedownCheckbox;
+use ParsedownExtra;
 
 
 /**
@@ -15,8 +19,9 @@ use Emojione\RuleSet;
  *
  * @package helper
  * @author  Frederic Guillot
+ * @additions Craig Crosby
  */
-class EmojiTextHelper extends Base
+class MarkdownPlusHelper extends Base
 {
     /**
      * HTML escaping
@@ -53,11 +58,12 @@ class EmojiTextHelper extends Base
     {
         $emoji = new Client(new Ruleset());
         $parser = new Markdown($this->container, $isPublicLink);
+        $parsecheckbox = new ParsedownCheckbox();
         $parser->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
         if ($this->configModel->get('unicode_shortcode', '2') == 1) 
-            return $emoji->shortnameToUnicode($parser->text($text));
+            return $emoji->shortnameToUnicode($parsecheckbox->text($text));
         else
-            return $emoji->toImage($parser->text($text));
+            return $emoji->toImage($parsecheckbox->text($text));
     }
 
     /**

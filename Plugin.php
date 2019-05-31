@@ -1,9 +1,10 @@
 <?php
 
-namespace Kanboard\Plugin\EmojiSupport;
+namespace Kanboard\Plugin\MarkdownPlus;
+
 
 use Kanboard\Core\Plugin\Base;
-use Kanboard\Plugin\EmojiSupport\Helper\EmojiTextHelper;
+use Kanboard\Plugin\MarkdownPlus\Helper\MarkdownPlusHelper;
 
 
 class Plugin extends Base
@@ -12,23 +13,23 @@ class Plugin extends Base
 	public function initialize()
 	{
         //HELPER
-        $this->helper->register('text', '\Kanboard\Plugin\EmojiSupport\Helper\EmojiTextHelper');
+        $this->helper->register('text', '\Kanboard\Plugin\MarkdownPlus\Helper\MarkdownPlusHelper');
         
         //CSS
-        $this->hook->on('template:layout:css', array('template' => 'plugins/EmojiSupport/Assets/css/emojisupport.css'));
+        $this->hook->on('template:layout:css', array('template' => 'plugins/MarkdownPlus/Assets/css/markdownplus.css'));
         
         //JS
-        $this->hook->on('template:layout:js', array('template' => 'plugins/EmojiSupport/Assets/js/jquery.textcomplete.min.js'));
-        $this->hook->on('template:layout:js', array('template' => 'plugins/EmojiSupport/Assets/js/emojisupport.js'));
+        $this->hook->on('template:layout:js', array('template' => 'plugins/MarkdownPlus/Assets/js/jquery.textcomplete.min.js'));
+        $this->hook->on('template:layout:js', array('template' => 'plugins/MarkdownPlus/Assets/js/markdownplus.js'));
         
         //CONFIG HOOK
-        $this->template->hook->attach('template:config:application', 'emojiSupport:config/config');
+        $this->template->hook->attach('template:config:application', 'markdownPlus:config/config');
 
 	}
 	
 	public function getPluginName()	
 	{ 		 
-		return 'EmojiSupport'; 
+		return 'MarkdownPlus'; 
 	}
 
 	public function getPluginAuthor() 
@@ -43,11 +44,11 @@ class Plugin extends Base
 
 	public function getPluginDescription() 
 	{ 
-		return 'Emoji Support in Markdown for Kanboard'; 
+		return 'Improved Markdown, with check boxes, emoji shortcode, inline html, etc...'; 
 	}
 
 	public function getPluginHomepage() 
 	{ 	 
-		return 'https://github.com/creecros/EmojiSupport'; 
+		return 'https://github.com/creecros/MarkdownPlus'; 
 	}
 }
