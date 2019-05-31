@@ -57,6 +57,8 @@ https://michelf.ca/projects/php-markdown/extra/
 
 # Install
 
+**Kanboard versions tested down to 1.0.43, :shortcode: autocomplete will not function on older version.
+
 ## Automatically
 
 1.) If your Kanboard installation is configured to install from the app, simply find it in the plugins directory and choose install.
