@@ -11,8 +11,8 @@
 
 ## Adds EmojiOne Shortcode and Unicode conversions to Markdown in Kanboard
 
-
 _Converts :shortname: and Unicode to EmojiOne newschool emojis, or..._
+
 _Converts :shortname: to unicode for oldschool emojis, so long as it passes through the markdown helper._
 
 ![image](https://user-images.githubusercontent.com/26339368/58675441-5a61db00-8322-11e9-9ea8-e6b5ffc31299.png)
