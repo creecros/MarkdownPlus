@@ -27,3 +27,36 @@ Toggle for oldschool vs newschool emojis is located in `Settings > Application s
 
 ![image](https://user-images.githubusercontent.com/26339368/58675183-289c4480-8321-11e9-86ed-2b58028b7127.png)
 
+# Install
+
+## Automatically
+
+1.) If your Kanboard installation is configured to install from the app, simply find it in the plugins directory and choose install.
+
+2.) Restart your server 
+
+
+## Manually
+
+1.) Download the latest versions supplied zip file, it should be named `EmojiSupport-x.xx.x.zip`
+  - I advise not to install from source or master
+
+![image](https://user-images.githubusercontent.com/26339368/58675566-eaa02000-8322-11e9-9466-85bcff17f320.png)
+
+2.) Unzip to the plugins folder.
+  - your folder structure should look like the following:
+```
+plugins
+└── EmojiSupport            <= Plugin name
+    ├── Assets    
+    ├── Helper  
+    ├── Template
+    ├── vendor
+    ├── LICENSE
+    ├── Plugin.php   
+    ├── README.md
+    ├── composer.json
+    └── composer.lock
+```
+
+3.) Restart your server
