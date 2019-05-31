@@ -67,6 +67,18 @@ class MarkdownPlusHelper extends Base
     }
 
     /**
+     * Escape Markdown text that need to be stored in HTML attribute
+     *
+     * @access public
+     * @param  string $text
+     * @return mixed
+     */
+    public function markdownAttribute($text)
+    {
+        return htmlentities($this->markdown($text), ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
      * Format a file size
      *
      * @param  integer  $size        Size in bytes
