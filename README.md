@@ -23,7 +23,7 @@ _Converts :shortname: to unicode for oldschool emojis, so long as it passes thro
 
 ![image](https://user-images.githubusercontent.com/26339368/58675471-7796a980-8322-11e9-8363-4ce64090df96.png)
 
-:shortname: autocomplete included, will probably pop up on all textareas...
+:shortname: autocomplete included, will probably pop up on all textareas...(may not work on older version of kanboard)
 
 ![image](https://user-images.githubusercontent.com/26339368/58675249-66996880-8321-11e9-9f57-6acebb45d3f5.png)
 
