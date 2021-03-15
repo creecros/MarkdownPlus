@@ -6,7 +6,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 require __DIR__.'/../vendor/emojione/emojione/lib/php/autoload.php';
 
-use Kanboard\Core\Markdown;
+use Kanboard\Plugin\MarkdownPlus\Helper\CoreMarkdown;
 use Kanboard\Core\Base;
 use Emojione\Client;
 use Emojione\RuleSet;
@@ -57,9 +57,8 @@ class MarkdownPlusHelper extends Base
     public function markdown($text, $isPublicLink = false)
     {
         $emoji = new Client(new Ruleset());
-        $parser = new Markdown($this->container, $isPublicLink);
-        $parsecheckbox = new ParsedownCheckbox();
-        $parser->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
+        $parsecheckbox = new CoreMarkdown($this->container, $isPublicLink);
+        $parsecheckbox->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
         if ($this->configModel->get('unicode_shortcode', '2') == 1) 
             return $emoji->shortnameToUnicode($parsecheckbox->text($text));
         else
