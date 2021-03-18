@@ -58,7 +58,7 @@ class MarkdownPlusHelper extends Base
     {
         $emoji = new Client(new Ruleset());
         $parsecheckbox = new CoreMarkdown($this->container, $isPublicLink);
-        $parsecheckbox->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
+        //$parsecheckbox->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
         if ($this->configModel->get('unicode_shortcode', '2') == 1) 
             return $emoji->shortnameToUnicode($parsecheckbox->text($text));
         else

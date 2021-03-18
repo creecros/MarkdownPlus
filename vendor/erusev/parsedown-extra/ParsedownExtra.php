@@ -237,14 +237,15 @@ class ParsedownExtra extends Parsedown
     protected function blockSetextHeader($Line, array $Block = null)
     {
         $Block = parent::blockSetextHeader($Line, $Block);
-
-        if (preg_match('/[ ]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['text'], $matches, PREG_OFFSET_CAPTURE))
-        {
-            $attributeString = $matches[1][0];
-
-            $Block['element']['attributes'] = $this->parseAttributeData($attributeString);
-
-            $Block['element']['text'] = substr($Block['element']['text'], 0, $matches[0][1]);
+        if (!is_null($Block)) {
+            if (preg_match('/[ ]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['text'], $matches, PREG_OFFSET_CAPTURE))
+            {
+                $attributeString = $matches[1][0];
+    
+                $Block['element']['attributes'] = $this->parseAttributeData($attributeString);
+    
+                $Block['element']['text'] = substr($Block['element']['text'], 0, $matches[0][1]);
+            }
         }
 
         return $Block;
