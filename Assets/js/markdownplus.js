@@ -42,6 +42,51 @@ $(document).ready(function() {
         ],{
             footer: '<a href="http://www.emoji.codes" target="_blank">Browse All<span class="arrow">»</span></a>'
         });
+
+ function onPaste(e) {
+        var activeElement = document.activeElement;
+        if (activeElement) {
+            var inputs = ['textarea'];
+            if (inputs.indexOf(activeElement.tagName.toLowerCase()) !== -1) {
+                
+                function IntoTextArea(blob) {
+                    activeElement.value += "<img src=\"" + blob + "\" class=\"enlargable\" />";
+                }
+                function onFileLoaded(e) {
+                    IntoTextArea(e.target.result)
+                }
+
+                if (e.clipboardData && e.clipboardData.items) {
+                    var items = e.clipboardData.items;
+                    if (items) {
+                        for (var i = 0; i < items.length; i++) {
+                            if (items[i].type.indexOf("image") !== -1) {
+                                var blob = items[i].getAsFile();
+                                var reader = new FileReader();
+                                reader.onload = onFileLoaded;
+                                reader.readAsDataURL(blob)
+                            }
+                        }
+                    }
+                } else {
+                    setTimeout(checkInput, 100)
+                }
+            }
+        }
+    }
+
+    function Enlarge(e) {
+        var image = new Image();
+        image.src = e.target.src;
+
+        var newwindow = window.open("");
+        newwindow.document.write(image.outerHTML);
+        newwindow.document.title = "Original image";
+        newwindow.document.close();
+    }
+
+    KB.onClick('.enlargable', Enlarge, !0);
+    window.addEventListener('paste', onPaste, !1)
 });
     KB.on('modal.afterRender', function () {
                 $("textarea").textcomplete([ {
