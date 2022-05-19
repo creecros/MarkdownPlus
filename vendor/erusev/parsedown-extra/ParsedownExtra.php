@@ -302,6 +302,10 @@ class ParsedownExtra extends Parsedown
     protected function inlineLink($Excerpt)
     {
         $Link = parent::inlineLink($Excerpt);
+        
+        if ( is_null($Link) || is_null($Link['extent'])) {
+            return null;
+        }
 
         $remainder = substr($Excerpt['text'], $Link['extent']);
 
