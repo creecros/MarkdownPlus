@@ -31,7 +31,7 @@ class MarkdownPlusHelper extends Base
      */
     public function e($value)
     {
-        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
+        return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8', false);
     }
 
     /**
@@ -43,7 +43,7 @@ class MarkdownPlusHelper extends Base
      */
     public function implode($glue, array $list)
     {
-        array_walk($list, function (&$value) { $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); });
+        array_walk($list, function (&$value) { $value = htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8', false); });
         return implode($glue, $list);
     }
 
@@ -74,7 +74,7 @@ class MarkdownPlusHelper extends Base
      */
     public function markdownAttribute($text)
     {
-        return htmlentities($this->markdown($text), ENT_QUOTES, 'UTF-8');
+        return htmlentities($this->markdown($text) ?? '', ENT_QUOTES, 'UTF-8');
     }
 
     /**

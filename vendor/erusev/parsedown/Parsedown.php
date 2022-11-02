@@ -1247,7 +1247,6 @@ class Parsedown
                 ),
             ),
         );
-
         $Inline['element']['attributes'] += $Link['element']['attributes'];
 
         unset($Inline['element']['attributes']['href']);
