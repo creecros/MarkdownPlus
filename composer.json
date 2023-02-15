@@ -1,6 +1,6 @@
 {
     "require": {
-        "emojione/emojione": "^4.5",
+        "joypixels/emoji-toolkit": "^7.0",
         "leblanc-simon/parsedown-checkbox": "^0.0.4"
     }
 }

@@ -206,7 +206,7 @@ class ParsedownExtra extends Parsedown
     {
         $Block = parent::blockHeader($Line);
 
-        if (preg_match('/[ #]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['text'], $matches, PREG_OFFSET_CAPTURE))
+        if ($Block !== null && preg_match('/[ #]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['handler']['argument'], $matches, PREG_OFFSET_CAPTURE))
         {
             $attributeString = $matches[1][0];
 
@@ -237,15 +237,14 @@ class ParsedownExtra extends Parsedown
     protected function blockSetextHeader($Line, array $Block = null)
     {
         $Block = parent::blockSetextHeader($Line, $Block);
-        if (!is_null($Block)) {
-            if (preg_match('/[ ]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['text'], $matches, PREG_OFFSET_CAPTURE))
-            {
-                $attributeString = $matches[1][0];
-    
-                $Block['element']['attributes'] = $this->parseAttributeData($attributeString);
-    
-                $Block['element']['text'] = substr($Block['element']['text'], 0, $matches[0][1]);
-            }
+
+        if ($Block !== null && preg_match('/[ ]*{('.$this->regexAttribute.'+)}[ ]*$/', $Block['element']['handler']['argument'], $matches, PREG_OFFSET_CAPTURE))
+        {
+            $attributeString = $matches[1][0];
+
+            $Block['element']['attributes'] = $this->parseAttributeData($attributeString);
+
+            $Block['element']['handler']['argument'] = substr($Block['element']['handler']['argument'], 0, $matches[0][1]);
         }
 
         return $Block;
@@ -302,8 +301,8 @@ class ParsedownExtra extends Parsedown
     protected function inlineLink($Excerpt)
     {
         $Link = parent::inlineLink($Excerpt);
-
-        $remainder = substr($Excerpt['text'], $Link['extent']);
+        
+        $remainder = $Link !== null ? substr($Excerpt['text'], $Link['extent']) : '';
 
         if (preg_match('/^[ ]*{('.$this->regexAttribute.'+)}/', $remainder, $matches))
         {

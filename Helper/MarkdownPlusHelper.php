@@ -4,12 +4,12 @@ namespace Kanboard\Plugin\MarkdownPlus\Helper;
 
 require __DIR__.'/../vendor/autoload.php';
 
-require __DIR__.'/../vendor/emojione/emojione/lib/php/autoload.php';
+require __DIR__.'/../vendor/joypixels/emoji-toolkit/lib/php/autoload.php';
 
 use Kanboard\Plugin\MarkdownPlus\Helper\CoreMarkdown;
 use Kanboard\Core\Base;
-use Emojione\Client;
-use Emojione\RuleSet;
+use JoyPixels\Client;
+use JoyPixels\RuleSet;
 use ParsedownCheckbox;
 use ParsedownExtra;
 

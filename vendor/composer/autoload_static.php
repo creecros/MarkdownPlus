@@ -11,16 +11,16 @@ class ComposerStaticInit65a8882e640840f82a5b23de49691603
     );
 
     public static $prefixLengthsPsr4 = array (
-        'E' => 
+        'J' => 
         array (
-            'Emojione\\' => 9,
+            'JoyPixels\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Emojione\\' => 
+        'JoyPixels\\' => 
         array (
-            0 => __DIR__ . '/..' . '/emojione/emojione/lib/php/src',
+            0 => __DIR__ . '/..' . '/joypixels/emoji-toolkit/lib/php/src',
         ),
     );
 
@@ -39,14 +39,7 @@ class ComposerStaticInit65a8882e640840f82a5b23de49691603
     );
 
     public static $classMap = array (
-        'Emojione\\Client' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Client.php',
-        'Emojione\\ClientInterface' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/ClientInterface.php',
-        'Emojione\\Emojione' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Emojione.php',
-        'Emojione\\Ruleset' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/Ruleset.php',
-        'Emojione\\RulesetInterface' => __DIR__ . '/..' . '/emojione/emojione/lib/php/src/RulesetInterface.php',
-        'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
-        'ParsedownExtra' => __DIR__ . '/..' . '/erusev/parsedown-extra/ParsedownExtra.php',
-        'ParsedownExtraTest' => __DIR__ . '/..' . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
