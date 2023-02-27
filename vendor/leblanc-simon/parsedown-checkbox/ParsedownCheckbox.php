@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ParsedownCheckbox package.
  *
@@ -39,13 +40,15 @@ class ParsedownCheckbox extends ParsedownExtra
 
     protected function blockListComplete(array $block)
     {
-        foreach ($block['element']['text'] as &$li_element) {
-            foreach ($li_element['text'] as $text) {
-                $begin_line = substr(trim($text), 0, 4);
-                if ('[ ] ' === $begin_line) {
-                    $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
-                } elseif ('[x] ' === $begin_line) {
-                    $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
+        if (isset($block['element']['text'])) {
+            foreach ($block['element']['text'] as &$li_element) {
+                foreach ($li_element['text'] as $text) {
+                    $begin_line = substr(trim($text), 0, 4);
+                    if ('[ ] ' === $begin_line) {
+                        $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
+                    } elseif ('[x] ' === $begin_line) {
+                        $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
+                    }
                 }
             }
         }
@@ -81,7 +84,7 @@ class ParsedownCheckbox extends ParsedownExtra
 
         return '<input type="checkbox" checked/> ' . $this->format($text);
     }
-    
+
     /**
      * Formats the checkbox label without double escaping.
      * @param string $text the string to format
