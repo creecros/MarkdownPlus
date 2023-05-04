@@ -13,8 +13,7 @@ class CheckboxController extends BaseController
         $count = preg_match_all(self::regexCheckbox, $text, $matches, PREG_OFFSET_CAPTURE); // find any remaining box
         $offset += $count;
 
-        if ($offset >= $number)
-        {
+        if ($offset >= $number) {
             return array(
                 'success' => true,
                 'offset' => $matches[0][$count - $offset + $number - 1][1] + 1
@@ -25,12 +24,9 @@ class CheckboxController extends BaseController
 
     private function togglechar(&$string, $offset)
     {
-        if ($string[$offset] === ' ')
-        {
+        if ($string[$offset] === ' ') {
             $string[$offset] = 'x';
-        }
-        else
-        {
+        } else {
             $string[$offset] = ' ';
         }
     }
@@ -43,30 +39,38 @@ class CheckboxController extends BaseController
         $number = intval($values['number']);
         $taskId = $values['task_id'];
 
-        if (isset($taskId))
-        {
+        if (isset($taskId)) {
             $task = $this->taskFinderModel->getById($taskId);
 
             $text = $task['description'];
 
             $result = $this->findCheckBox($text, $number, $foundCheckboxes);
 
-            if ($result['success'])
-            {
+            if ($result['success']) {
                 $this->togglechar($text, $result['offset']);
                 $task['description'] = $text;
                 $this->taskModificationModel->update($task);
                 return;
             }
 
-            foreach ($this->commentModel->getAll($taskId) as $comment)
-            {
+            if (isset($this->container["subtaskResultModel"])) {
+                foreach ($this->subtaskModel->getAll($taskId) as $subtask) {
+                    $text = $this->subtaskResultModel->getById($subtask['id']);
+                    $result = $this->findCheckBox($text, $number, $foundCheckboxes);
+                    if ($result['success']) {
+                        $this->togglechar($text, $result['offset']);
+                        $this->subtaskResultModel->Save($subtask['id'], $text);
+                        return;
+                    }
+                }
+            }
+
+            foreach ($this->commentModel->getAll($taskId) as $comment) {
                 $text = $comment['comment'];
 
                 $result = $this->findCheckBox($text, $number, $foundCheckboxes);
 
-                if ($result['success'])
-                {
+                if ($result['success']) {
                     $this->togglechar($text, $result['offset']);
                     $comment['comment'] = $text;
                     $this->commentModel->update($comment);
