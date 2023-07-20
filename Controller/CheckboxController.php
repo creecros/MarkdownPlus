@@ -43,9 +43,7 @@ class CheckboxController extends BaseController
             $task = $this->taskFinderModel->getById($taskId);
 
             $text = $task['description'];
-
             $result = $this->findCheckBox($text, $number, $foundCheckboxes);
-
             if ($result['success']) {
                 $this->togglechar($text, $result['offset']);
                 $task['description'] = $text;
@@ -60,6 +58,19 @@ class CheckboxController extends BaseController
                     if ($result['success']) {
                         $this->togglechar($text, $result['offset']);
                         $this->subtaskResultModel->Save($subtask['id'], $text);
+                        return;
+                    }
+                }
+            }
+
+            if (isset($this->container["definitionOfDoneModel"])) {
+                foreach ($this->definitionOfDoneModel->getAll($taskId) as $subtask) {
+                    $dod = $this->definitionOfDoneModel->getById($subtask['id']);
+
+                    $result = $this->findCheckBox($dod['text'], $number, $foundCheckboxes);
+                    if ($result['success']) {
+                        $this->togglechar($dod['text'], $result['offset']);
+                        $this->definitionOfDoneModel->save($dod);
                         return;
                     }
                 }
