@@ -55,6 +55,13 @@ class CheckboxController extends BaseController
                 foreach ($this->definitionOfDoneModel->getAll($taskId) as $subtask) {
                     $dod = $this->definitionOfDoneModel->getById($subtask['id']);
 
+                    $result = $this->findCheckBox($dod['title'], $number, $foundCheckboxes);
+                    if ($result['success']) {
+                        $this->togglechar($dod['title'], $result['offset']);
+                        $this->definitionOfDoneModel->save($dod);
+                        return;
+                    }
+
                     $result = $this->findCheckBox($dod['text'], $number, $foundCheckboxes);
                     if ($result['success']) {
                         $this->togglechar($dod['text'], $result['offset']);
