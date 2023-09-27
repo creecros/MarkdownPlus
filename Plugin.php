@@ -25,7 +25,7 @@ class Plugin extends Base
 
         //checkbox handling
         $this->hook->on('template:layout:js', array('template' => 'plugins/MarkdownPlus/Assets/js/checkbox.js'));
-        $this->route->addRoute('MarkdownPlus/Checkbox', 'CheckboxController', 'toggle', 'MarkdownPlus');
+        $this->route->addRoute('/MarkdownPlus/Checkbox', 'CheckboxController', 'toggle', 'MarkdownPlus');
     }
 
     public function getPluginName()
