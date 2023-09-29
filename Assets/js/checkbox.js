@@ -10,17 +10,23 @@ KB.on('dom.ready', function () {
         function ToggleActiveCheckbox(e) {
             const urlParams = new URLSearchParams(window.location.search);
 
+            var task_id = null;
+            var taskIdElem = document.getElementById('form-task_id');
+            if (taskIdElem != null) {
+                task_id = taskIdElem.value;
+            }
+
             if (URLRewrite) {
                 const link = '/MarkdownPlus/Checkbox';
                 KB.http.postJson(link, {
-                    'task_id': urlParams.get('task_id'),
+                    'task_id': task_id,
                     'number': e.target.getAttribute('number')
                 });
             }
             else {
                 const link = '?controller=CheckboxController&action=toggle&plugin=MarkdownPlus';
                 KB.http.postJson(link, {
-                    'task_id': urlParams.get('task_id'),
+                    'task_id': task_id,
                     'number': e.target.getAttribute('number')
                 });
             }
