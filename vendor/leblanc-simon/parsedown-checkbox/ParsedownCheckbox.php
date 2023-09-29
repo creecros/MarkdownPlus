@@ -11,6 +11,7 @@
 class ParsedownCheckbox extends ParsedownExtra
 {
     const VERSION = '0.0.4';
+    private static $count = 1;
 
     public function __construct()
     {
@@ -73,7 +74,7 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" class="activeCheckBox"/> ' . $this->format($text);
+        return '<input type="checkbox" class="activecheckbox" number="'. ParsedownCheckbox::$count++ .'"/> ' . $this->format($text);
     }
 
     protected function checkboxChecked($text)
@@ -82,7 +83,7 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" class="activeCheckBox" checked/> ' . $this->format($text);
+        return '<input type="checkbox" class="activecheckbox" number="'. ParsedownCheckbox::$count++ .'" checked/> ' . $this->format($text);
     }
 
     /**
