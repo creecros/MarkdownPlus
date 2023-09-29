@@ -16,20 +16,18 @@ KB.on('dom.ready', function () {
                 task_id = taskIdElem.value;
             }
 
+            let link = "";
             if (URLRewrite) {
-                const link = '/MarkdownPlus/Checkbox';
-                KB.http.postJson(link, {
-                    'task_id': task_id,
-                    'number': e.target.getAttribute('number')
-                });
+                link = '/MarkdownPlus/Checkbox';
             }
             else {
-                const link = '?controller=CheckboxController&action=toggle&plugin=MarkdownPlus';
-                KB.http.postJson(link, {
-                    'task_id': task_id,
-                    'number': e.target.getAttribute('number')
-                });
+                link = '?controller=CheckboxController&action=toggle&plugin=MarkdownPlus';
             }
+            
+            KB.http.postJson(link, {
+                'task_id': task_id,
+                'number': e.target.getAttribute('number')
+            });
         }
     }
 });
