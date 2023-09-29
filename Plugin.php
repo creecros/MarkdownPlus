@@ -3,7 +3,6 @@
 namespace Kanboard\Plugin\MarkdownPlus;
 
 use Kanboard\Core\Plugin\Base;
-use Kanboard\Plugin\MarkdownPlus\Helper\MarkdownPlusHelper;
 
 class Plugin extends Base
 
