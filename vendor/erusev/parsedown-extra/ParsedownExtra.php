@@ -629,6 +629,17 @@ class ParsedownExtra extends Parsedown
 
         # http://stackoverflow.com/q/4879946/200145
         $DOMDocument->loadHTML($elementMarkup);
+        
+        if (!$DOMDocument->validate()) {
+            $errormessage = 'could not parse html<br>';
+            $errors = libxml_get_errors();
+            foreach ($errors as $error) {
+                $errormessage .= $error->message;
+                $errormessage .= '<br>';
+            }
+            return $errormessage;
+        }
+
         $DOMDocument->removeChild($DOMDocument->doctype);
         $DOMDocument->replaceChild($DOMDocument->firstChild->firstChild->firstChild, $DOMDocument->firstChild);
 
