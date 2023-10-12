@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\MarkdownPlus\Controller;
 
 use Kanboard\Controller\BaseController;
+use Kanboard\Model\UserMetadataModel;
 
 class CheckboxController extends BaseController
 {
@@ -83,7 +84,9 @@ class CheckboxController extends BaseController
                 }
             }
 
-            foreach ($this->commentModel->getAll($taskId) as $comment) {
+            $commentSortingDirection = $this->userMetadataCacheDecorator->get(UserMetadataModel::KEY_COMMENT_SORTING_DIRECTION, 'ASC');
+
+            foreach ($this->commentModel->getAll($taskId, $commentSortingDirection) as $comment) {
                 $text = $comment['comment'];
 
                 $result = $this->findCheckBox($text, $number, $foundCheckboxes);
