@@ -7,7 +7,29 @@ use Kanboard\Model\UserMetadataModel;
 
 class CheckboxController extends BaseController
 {
-    private const regexCheckbox = '/\[[x, ]\]/m';
+    /*
+    # must match
+    + [x] 2
+    * [ ] 3 
+    > - [ ] 1
+    + [x] 2
+    * [ ] 3 
+    > > * * [ ] 3 
+    > * > * * [ ] 3 
+    [ ] test 8
+
+    # must not match:
+
+    - [x]1
+    + [ ]
+    test [x]  
+    test [x]  
+    [] test 3  
+    [a] test  
+    [x](www.google.de) test4
+    */
+
+    private const regexCheckbox = '/^([+,\-,*,>, ] )*(\[[x, ]\] )/m';
 
     private function findCheckBox($text, $number, &$offset)
     {
@@ -17,7 +39,9 @@ class CheckboxController extends BaseController
         if ($offset >= $number) {
             return array(
                 'success' => true,
-                'offset' => $matches[0][$count - $offset + $number - 1][1] + 1
+                'offset' => end($matches) // the actual box [ ]/[x]
+                [$count - $offset + $number - 1] // the requested checkbox
+                [1] + 1 // the offset to the checkbox content
             );
         }
         return array('success' => false);
@@ -35,67 +59,69 @@ class CheckboxController extends BaseController
     public function toggle()
     {
         $values = $this->request->getJson();
-
-        $foundCheckboxes = 0;
-        $number = intval($values['number']);
         $taskId = $values['task_id'];
 
         if (isset($taskId)) {
             $task = $this->taskFinderModel->getById($taskId);
 
-            $text = $task['description'];
-            $result = $this->findCheckBox($text, $number, $foundCheckboxes);
-            if ($result['success']) {
-                $this->togglechar($text, $result['offset']);
-                $task['description'] = $text;
-                $this->taskModificationModel->update($task);
-                return;
-            }
+            if ($task) {
+                $foundCheckboxes = 0;
+                $number = intval($values['number']);
 
-            if (isset($this->container["definitionOfDoneModel"])) {
-                foreach ($this->definitionOfDoneModel->getAll($taskId) as $subtask) {
-                    $dod = $this->definitionOfDoneModel->getById($subtask['id']);
-
-                    $result = $this->findCheckBox($dod['title'], $number, $foundCheckboxes);
-                    if ($result['success']) {
-                        $this->togglechar($dod['title'], $result['offset']);
-                        $this->definitionOfDoneModel->save($dod);
-                        return;
-                    }
-
-                    $result = $this->findCheckBox($dod['text'], $number, $foundCheckboxes);
-                    if ($result['success']) {
-                        $this->togglechar($dod['text'], $result['offset']);
-                        $this->definitionOfDoneModel->save($dod);
-                        return;
-                    }
-                }
-            }
-
-            if (isset($this->container["subtaskResultModel"])) {
-                foreach ($this->subtaskModel->getAll($taskId) as $subtask) {
-                    $text = $this->subtaskResultModel->getById($subtask['id']);
-                    $result = $this->findCheckBox($text, $number, $foundCheckboxes);
-                    if ($result['success']) {
-                        $this->togglechar($text, $result['offset']);
-                        $this->subtaskResultModel->Save($subtask['id'], $text);
-                        return;
-                    }
-                }
-            }
-
-            $commentSortingDirection = $this->userMetadataCacheDecorator->get(UserMetadataModel::KEY_COMMENT_SORTING_DIRECTION, 'ASC');
-
-            foreach ($this->commentModel->getAll($taskId, $commentSortingDirection) as $comment) {
-                $text = $comment['comment'];
-
+                $text = $task['description'];
                 $result = $this->findCheckBox($text, $number, $foundCheckboxes);
-
                 if ($result['success']) {
                     $this->togglechar($text, $result['offset']);
-                    $comment['comment'] = $text;
-                    $this->commentModel->update($comment);
+                    $task['description'] = $text;
+                    $this->taskModificationModel->update($task);
                     return;
+                }
+
+                if (isset($this->container["definitionOfDoneModel"])) {
+                    foreach ($this->definitionOfDoneModel->getAll($taskId) as $subtask) {
+                        $dod = $this->definitionOfDoneModel->getById($subtask['id']);
+
+                        $result = $this->findCheckBox($dod['title'], $number, $foundCheckboxes);
+                        if ($result['success']) {
+                            $this->togglechar($dod['title'], $result['offset']);
+                            $this->definitionOfDoneModel->save($dod);
+                            return;
+                        }
+
+                        $result = $this->findCheckBox($dod['text'], $number, $foundCheckboxes);
+                        if ($result['success']) {
+                            $this->togglechar($dod['text'], $result['offset']);
+                            $this->definitionOfDoneModel->save($dod);
+                            return;
+                        }
+                    }
+                }
+
+                if (isset($this->container["subtaskResultModel"])) {
+                    foreach ($this->subtaskModel->getAll($taskId) as $subtask) {
+                        $text = $this->subtaskResultModel->getById($subtask['id']);
+                        $result = $this->findCheckBox($text, $number, $foundCheckboxes);
+                        if ($result['success']) {
+                            $this->togglechar($text, $result['offset']);
+                            $this->subtaskResultModel->Save($subtask['id'], $text);
+                            return;
+                        }
+                    }
+                }
+
+                $commentSortingDirection = $this->userMetadataCacheDecorator->get(UserMetadataModel::KEY_COMMENT_SORTING_DIRECTION, 'ASC');
+
+                foreach ($this->commentModel->getAll($taskId, $commentSortingDirection) as $comment) {
+                    $text = $comment['comment'];
+
+                    $result = $this->findCheckBox($text, $number, $foundCheckboxes);
+
+                    if ($result['success']) {
+                        $this->togglechar($text, $result['offset']);
+                        $comment['comment'] = $text;
+                        $this->commentModel->update($comment);
+                        return;
+                    }
                 }
             }
         }

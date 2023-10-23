@@ -63,7 +63,7 @@ class CoreMarkdown extends ParsedownCheckbox
         if (preg_match('!#(\d+)!i', $Excerpt['text'], $matches)) {
             $link = $this->buildTaskLink($matches[1]);
 
-            if (! empty($link)) {
+            if (!empty($link)) {
                 return array(
                     'extent' => strlen($matches[0]),
                     'element' => array(
@@ -89,11 +89,11 @@ class CoreMarkdown extends ParsedownCheckbox
      */
     protected function inlineUserLink(array $Excerpt)
     {
-        if (! $this->isPublicLink && preg_match('/^@([^\s,!:?]+)/', $Excerpt['text'], $matches)) {
+        if (!$this->isPublicLink && preg_match('/^@([^\s,!:?]+)/', $Excerpt['text'], $matches)) {
             $username = rtrim($matches[1], '.');
             $user = $this->container['userCacheDecorator']->getByUsername($username);
 
-            if (! empty($user)) {
+            if (!empty($user)) {
                 $url = $this->container['helper']->url->to('UserViewController', 'profile', array('user_id' => $user['id']));
                 $name = $user['name'] ?: $user['username'];
 
@@ -128,7 +128,7 @@ class CoreMarkdown extends ParsedownCheckbox
         if ($this->isPublicLink) {
             $token = $this->container['memoryCache']->proxy($this->container['taskFinderModel'], 'getProjectToken', $task_id);
 
-            if (! empty($token)) {
+            if (!empty($token)) {
                 return $this->container['helper']->url->to(
                     'TaskViewController',
                     'readonly',
@@ -165,4 +165,31 @@ class CoreMarkdown extends ParsedownCheckbox
         }
         return $Inline;
     }
+
+    function text($text)
+    {
+        $markup = parent::text($text);
+
+        $this->nummerizeCheckboxes($markup);
+
+        return $markup;
+    }
+
+    private function nummerizeCheckboxes(&$markup)
+    {
+        $counter = new Counter;
+        $count = 0;
+
+        $markup = preg_replace_callback("/activecheckbox\"/m", $counter->count(...), $markup, -1, $count, PREG_OFFSET_CAPTURE);
+    }
 }
+
+class Counter
+{
+    private $count = 0;
+
+    public function count($matches) {
+        $this->count++;
+        return $matches[0][0] . " data-number=". $this->count . " ";
+    }
+};
