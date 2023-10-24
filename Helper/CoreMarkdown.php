@@ -180,7 +180,7 @@ class CoreMarkdown extends ParsedownCheckbox
         $counter = new Counter;
         $count = 0;
 
-        $markup = preg_replace_callback("/activecheckbox\"/m", $counter->count(...), $markup, -1, $count, PREG_OFFSET_CAPTURE);
+        $markup = preg_replace_callback("/activecheckbox\"/m", array($counter, 'count'), $markup, -1, $count, PREG_OFFSET_CAPTURE);
     }
 }
 
