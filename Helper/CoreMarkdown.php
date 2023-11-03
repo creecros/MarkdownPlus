@@ -186,10 +186,10 @@ class CoreMarkdown extends ParsedownCheckbox
 
 class Counter
 {
-    private $count = 0;
+    private static $count = 0;
 
     public function count($matches) {
-        $this->count++;
-        return $matches[0][0] . " data-number=". $this->count . " ";
+        $this::$count++;
+        return $matches[0][0] . " data-number=". $this::$count . " ";
     }
 };
