@@ -633,7 +633,7 @@ class ParsedownExtra extends Parsedown
         $errors = libxml_get_errors();
         if ($errors)
         {
-            $errormessage = "";
+            $errormessage = "<h1>htmlparser error:</h1><br>";
             foreach ($errors as $error) {
                 $errormessage .= $error->message;
                 $errormessage .= '<br>';
