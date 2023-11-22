@@ -635,6 +635,7 @@ class ParsedownExtra extends Parsedown
         if ($errors)
         {
             $errormessage = "<h1>HTML-parser error:</h1><br>";
+            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
             foreach ($errors as $error) {
                 $errormessage .= "Line: " . $error->line . " - " . $error->message;
                 $errormessage .= '<br>';
@@ -645,6 +646,7 @@ class ParsedownExtra extends Parsedown
         if (!isset($DOMDocument->firstChild->firstChild->firstChild))
         {
             $errormessage = "<h1>General HTML-parser error:</h1><br>";
+            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
             $errormessage .= "Input:<pre><code>" . htmlspecialchars($elementMarkup) . "</code></pre>";
             $errormessage .= "Output:<pre><code>" . htmlspecialchars($DOMDocument->saveHTML()) . "</code></pre>";
             return $errormessage;
