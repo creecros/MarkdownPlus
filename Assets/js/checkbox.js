@@ -23,10 +23,10 @@ KB.on('dom.ready', function () {
             else {
                 link = '?controller=CheckboxController&action=toggle&plugin=MarkdownPlus';
             }
-            
+
             KB.http.postJson(link, {
                 'task_id': task_id,
-                'number': e.target.getAttribute('number')
+                'number': e.target.dataset.number
             });
         }
     }

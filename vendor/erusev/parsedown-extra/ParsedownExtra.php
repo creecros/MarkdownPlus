@@ -628,19 +628,30 @@ class ParsedownExtra extends Parsedown
         $elementMarkup = mb_convert_encoding($elementMarkup, 'HTML-ENTITIES', 'UTF-8');
 
         # http://stackoverflow.com/q/4879946/200145
-        $DOMDocument->loadHTML($elementMarkup);
-        
-        if (!$DOMDocument->validate()) {
-            $errormessage = 'could not parse html<br>';
-            $errors = libxml_get_errors();
+        $success = $DOMDocument->loadHTML($elementMarkup);
+        $DOMDocument->removeChild($DOMDocument->doctype);
+
+        $errors = libxml_get_errors();
+        if ($errors)
+        {
+            $errormessage = "<h1>HTML-parser error:</h1><br>";
+            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
             foreach ($errors as $error) {
-                $errormessage .= $error->message;
+                $errormessage .= "Line: " . $error->line . " - " . $error->message;
                 $errormessage .= '<br>';
             }
             return $errormessage;
         }
 
-        $DOMDocument->removeChild($DOMDocument->doctype);
+        if (!isset($DOMDocument->firstChild->firstChild->firstChild))
+        {
+            $errormessage = "<h1>General HTML-parser error:</h1><br>";
+            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
+            $errormessage .= "Input:<pre><code>" . htmlspecialchars($elementMarkup) . "</code></pre>";
+            $errormessage .= "Output:<pre><code>" . htmlspecialchars($DOMDocument->saveHTML()) . "</code></pre>";
+            return $errormessage;
+        }
+
         $DOMDocument->replaceChild($DOMDocument->firstChild->firstChild->firstChild, $DOMDocument->firstChild);
 
         $elementText = '';
