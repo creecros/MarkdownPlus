@@ -628,11 +628,12 @@ class ParsedownExtra extends Parsedown
         $elementMarkup = mb_convert_encoding($elementMarkup, 'HTML-ENTITIES', 'UTF-8');
 
         # http://stackoverflow.com/q/4879946/200145
-        $DOMDocument->loadHTML($elementMarkup);
-        
-        if (!$DOMDocument->validate()) {
-            $errormessage = 'could not parse html<br>';
-            $errors = libxml_get_errors();
+        $DOMDocument->loadHTML($elementMarkup, LIBXML_DTDATTR | LIBXML_NONET);
+
+        $errors = libxml_get_errors();
+        if ($errors)
+        {
+            $errormessage = "";
             foreach ($errors as $error) {
                 $errormessage .= $error->message;
                 $errormessage .= '<br>';
