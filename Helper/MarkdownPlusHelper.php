@@ -7,7 +7,7 @@ require __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/../vendor/joypixels/emoji-toolkit/lib/php/autoload.php';
 
 use Kanboard\Plugin\MarkdownPlus\Helper\CoreMarkdown;
-use Kanboard\Core\Base;
+use Kanboard\Helper\TextHelper;
 use JoyPixels\Client;
 use JoyPixels\RuleSet;
 use ParsedownCheckbox;
@@ -21,7 +21,7 @@ use ParsedownExtra;
  * @author  Frederic Guillot
  * @additions Craig Crosby
  */
-class MarkdownPlusHelper extends Base
+class MarkdownPlusHelper extends TextHelper
 {
     /**
      * HTML escaping
