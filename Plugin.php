@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\MarkdownPlus;
 
 use Kanboard\Core\Plugin\Base;
+use Kanboard\Core\Translator;
 
 class Plugin extends Base
 
@@ -27,6 +28,11 @@ class Plugin extends Base
         $this->route->addRoute('MarkdownPlus/Checkbox', 'CheckboxController', 'toggle', 'MarkdownPlus');
     }
 
+    public function onStartup()
+    {
+        Translator::load($this->languageModel->getCurrentLanguage(), __DIR__.'/Locale');
+    }
+
     public function getPluginName()
     {
         return 'MarkdownPlus';
@@ -39,12 +45,12 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '1.1.4';
+        return '1.1.5';
     }
 
     public function getPluginDescription()
     {
-        return 'Improved Markdown, with check boxes, emoji shortcode, inline html, etc...';
+        return t('Improved Markdown, with check boxes, emoji shortcode, inline html, etc...');
     }
 
     public function getPluginHomepage()
