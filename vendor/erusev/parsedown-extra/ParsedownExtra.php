@@ -6,7 +6,7 @@
 # https://github.com/erusev/parsedown-extra
 #
 # (c) Emanuil Rusev
-# http://erusev.com
+# https://erusev.com
 #
 # For the full license information, view the LICENSE file that was distributed
 # with this source code.
@@ -17,15 +17,15 @@ class ParsedownExtra extends Parsedown
 {
     # ~
 
-    const version = '0.8.0';
+    const version = '0.9.0';
 
     # ~
 
     function __construct()
     {
-        if (version_compare(parent::version, '1.7.1') < 0)
+        if (version_compare(parent::version, '1.8.0') < 0)
         {
-            throw new Exception('ParsedownExtra requires a later version of Parsedown');
+            throw new Exception('ParsedownExtra requires Parsedown 1.8.0 or later');
         }
 
         $this->BlockTypes[':'] []= 'DefinitionList';
@@ -508,7 +508,7 @@ class ParsedownExtra extends Parsedown
             ),
         );
 
-        uasort($this->DefinitionData['Footnote'], 'self::sortFootnotes');
+        uasort($this->DefinitionData['Footnote'], [$this, 'sortFootnotes']);
 
         foreach ($this->DefinitionData['Footnote'] as $definitionId => $DefinitionData)
         {
@@ -545,7 +545,7 @@ class ParsedownExtra extends Parsedown
 
             $n = count($textElements) -1;
 
-            if ($textElements[$n]['name'] === 'p')
+            if (isset($textElements[$n]['name']) && $textElements[$n]['name'] === 'p')
             {
                 $backLinkElements = array_merge(
                     array(
@@ -625,33 +625,15 @@ class ParsedownExtra extends Parsedown
         $DOMDocument = new DOMDocument;
 
         # http://stackoverflow.com/q/11309194/200145
-        $elementMarkup = mb_convert_encoding($elementMarkup, 'HTML-ENTITIES', 'UTF-8');
+        $elementMarkup = mb_encode_numericentity(
+            $elementMarkup,
+            [0x80, 0x10FFFF, 0, ~0],
+            'UTF-8'
+        );
 
         # http://stackoverflow.com/q/4879946/200145
-        $success = $DOMDocument->loadHTML($elementMarkup);
+        $DOMDocument->loadHTML($elementMarkup);
         $DOMDocument->removeChild($DOMDocument->doctype);
-
-        $errors = libxml_get_errors();
-        if ($errors)
-        {
-            $errormessage = "<h1>HTML-parser error:</h1><br>";
-            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
-            foreach ($errors as $error) {
-                $errormessage .= "Line: " . $error->line . " - " . $error->message;
-                $errormessage .= '<br>';
-            }
-            return $errormessage;
-        }
-
-        if (!isset($DOMDocument->firstChild->firstChild->firstChild))
-        {
-            $errormessage = "<h1>General HTML-parser error:</h1><br>";
-            $errormessage .= "The input was interpret as HTML - did you miss the <code>markdown=1</code> attribute?<br>";
-            $errormessage .= "Input:<pre><code>" . htmlspecialchars($elementMarkup) . "</code></pre>";
-            $errormessage .= "Output:<pre><code>" . htmlspecialchars($DOMDocument->saveHTML()) . "</code></pre>";
-            return $errormessage;
-        }
-
         $DOMDocument->replaceChild($DOMDocument->firstChild->firstChild->firstChild, $DOMDocument->firstChild);
 
         $elementText = '';
