@@ -59,10 +59,43 @@ class MarkdownPlusHelper extends TextHelper
         $emoji = new Client(new Ruleset());
         $parsecheckbox = new CoreMarkdown($this->container, $isPublicLink);
         //$parsecheckbox->setMarkupEscaped(MARKDOWN_ESCAPE_HTML);
-        if ($this->configModel->get('unicode_shortcode', '2') == 1) 
-            return $emoji->shortnameToUnicode($parsecheckbox->text($text));
-        else
-            return $emoji->toImage($parsecheckbox->text($text));
+
+        $method = $this->configModel->get('unicode_shortcode', '2') == 1
+            ? 'shortnameToUnicode'
+            : 'toImage';
+
+        $html = $parsecheckbox->text($text);
+
+        if ($this->configModel->get('emoji_word_boundary', '2') == 1) {
+            return $this->emojiOnWordBoundary($html, $emoji, $method);
+        }
+
+        return $emoji->$method($html);
+    }
+
+    /**
+     * Replace :shortnames: only where they stand on a word boundary.
+     *
+     * JoyPixels matches any :word: pattern, so hex MAC addresses
+     * (a0:ab:1b:7e:5a:f3) and file:line:column references get mangled.
+     * In oldschool mode an unknown shortname is even replaced by an empty
+     * string, silently dropping characters. GitHub applies the same
+     * boundary rule.
+     *
+     * @param  string $html   HTML produced by Parsedown
+     * @param  object $emoji  JoyPixels client
+     * @param  string $method 'shortnameToUnicode' or 'toImage'
+     * @return string
+     */
+    private function emojiOnWordBoundary($html, $emoji, $method)
+    {
+        return preg_replace_callback(
+            '/(?<![0-9A-Za-z:])(:[0-9a-z_+-]+:)(?![0-9A-Za-z:])/',
+            function ($m) use ($emoji, $method) {
+                return $emoji->$method($m[1]);
+            },
+            $html
+        );
     }
 
     /**
