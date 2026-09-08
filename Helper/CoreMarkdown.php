@@ -170,17 +170,17 @@ class CoreMarkdown extends ParsedownCheckbox
 
     function text($text)
     {
-        +$isTop = $this->isTopLevelCall;
-+        if ($isTop) {
-+            $this->isTopLevelCall = false;
-+            Counter::reset();
-+        }
+        $isTop = $this->isTopLevelCall;
+        if ($isTop) {
+            $this->isTopLevelCall = false;
+            Counter::reset();
+        }
         $markup = parent::text($text);
 
-+        if ($isTop) {
-+            $this->isTopLevelCall = true;
-+            $this->nummerizeCheckboxes($markup);
-+        }
+        if ($isTop) {
+            $this->isTopLevelCall = true;
+            $this->nummerizeCheckboxes($markup);
+        }
 
         return $markup;
     }
@@ -199,8 +199,8 @@ class Counter
     private static $count = 0;
 
     public static function reset() {
-+        self::$count = 0;
-+    }
+        self::$count = 0;
+    }
 
     public function count($matches) {
         self::$count++;
